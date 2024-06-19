@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
@@ -14,9 +14,7 @@ class CustomUser(AbstractUser):
         ('CUSTOMER', 'Customer')
     ]
 
-    name = models.CharField(max_length=100, unique=True)
-    email = models.EmailField(unique=True)
-    age = models.PositiveIntegerField(null=True, blank=True)
+    age = models.PositiveIntegerField(null=False, blank=True, default=0, db_default=0)
     gender = models.CharField(
         max_length=10,
         choices=GENDER_CHOICES,

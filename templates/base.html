@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Title{% endblock title %}</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        button {
+            margin: 1%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        {% block header %}
+            <h1>Мій сайт</h1>
+        {% endblock header %}
+    </header>
+    <main>
+        {% block main %}
+        {% endblock main %}
+    </main>
+    <footer>
+        {% block footer %}
+            <p>Проходячи реєстрацію ви погоджуєтесь з правом передачі ваших персональних даних третім лицям.</p>
+        {% endblock footer %}
+    </footer>
+</body>
+</html>

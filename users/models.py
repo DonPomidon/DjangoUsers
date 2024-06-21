@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
         ('CUSTOMER', 'Customer')
     ]
 
-    age = models.PositiveIntegerField(null=False, blank=True, default=0, db_default=0)
+    age = models.PositiveIntegerField(blank=False, db_default=0)
     gender = models.CharField(
         max_length=10,
         choices=GENDER_CHOICES,
@@ -25,4 +25,21 @@ class CustomUser(AbstractUser):
         choices=DEPARTMENT_CHOICES,
         default='CUSTOMER'
     )
+    email = models.EmailField(unique=True)
 
+
+class UserRegister(models.Model):
+    GENDER_CHOICES = [
+        ('MALE', 'Male'),
+        ('FEMALE', 'Female'),
+    ]
+
+    username = models.CharField(max_length=100)
+    email = models.EmailField()
+    password = models.CharField(max_length=100)
+    age = models.IntegerField()
+    gender = models.CharField(
+        max_length=10,
+        choices=GENDER_CHOICES,
+        default='MALE',
+    )

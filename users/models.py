@@ -28,18 +28,3 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
 
 
-class UserRegister(models.Model):
-    GENDER_CHOICES = [
-        ('MALE', 'Male'),
-        ('FEMALE', 'Female'),
-    ]
-
-    username = models.CharField(max_length=100)
-    email = models.EmailField()
-    password = models.CharField(max_length=100)
-    age = models.IntegerField()
-    gender = models.CharField(
-        max_length=10,
-        choices=GENDER_CHOICES,
-        default='MALE',
-    )

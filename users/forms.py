@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser, UserRegister
+from .models import CustomUser
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -15,30 +15,14 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('age', 'gender', 'department')
 
 
-class CustomUserLogin(forms.Form):
-    username = forms.CharField(
-        label="Ведіть ваше ім\'я та прізвище:",
-        max_length=100,
-        required=True,
-        strip=True,
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        localize=True,
-        validators=[],
-        initial='DenKudrev',
-    )
-    password = forms.CharField(
-        label="Ведіть ваш пароль:",
-        max_length=100,
-        required=True,
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        localize=True,
-        validators=[],
-        error_messages={},
-    )
+class CustomUserLogin(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password']
 
 
 class CustomUserRegister(forms.ModelForm):
     class Meta:
-        model = UserRegister
+        model = CustomUser
         fields = ['username', 'email', 'password', 'age', 'gender']
 

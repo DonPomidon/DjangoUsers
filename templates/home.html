@@ -11,8 +11,8 @@
         <p>Welcome, {{ user.username }}!</p>
         <a href="{% url 'logout' %}"><button></button></a>
     {% else %}
-        <a href="{% url 'login' %}"><button>{{ button_login }}</button></a>
-        <a href="{% url 'register' %}"><button>{{ button_register }}</button></a>
+        <a href="{% url 'login_user' %}"><button>{{ button_login }}</button></a>
+        <a href="{% url 'register_user' %}"><button>{{ button_register }}</button></a>
     {% endif %}
 {% endblock main %}
 

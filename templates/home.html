@@ -9,7 +9,7 @@
 {% block main %}
     {% if user.is_authenticated %}
         <p>Welcome, {{ user.username }}!</p>
-        <a href="{% url 'logout' %}"><button></button></a>
+        <a href="{% url 'logout_user' %}"><button>{{ button_logout }}</button></a>
     {% else %}
         <a href="{% url 'login_user' %}"><button>{{ button_login }}</button></a>
         <a href="{% url 'register_user' %}"><button>{{ button_register }}</button></a>

@@ -15,14 +15,13 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('age', 'gender', 'department')
 
 
-class CustomUserLogin(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'password']
+class CustomUserLogin(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=100)
 
 
 class CustomUserRegister(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'age', 'gender']
+        fields = ('username', 'email', 'password', 'age', 'gender')
 

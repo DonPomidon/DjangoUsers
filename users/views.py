@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .forms import CustomUserRegister, CustomUserLogin
-from django.contrib.auth import login, authenticate, logout as auth_logout
+from django.contrib.auth import login, logout as auth_logout
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Product
+from .forms import ProductForm
+from django.urls import reverse_lazy
 
 
 def home(request):
@@ -10,19 +13,17 @@ def home(request):
         'header': 'Вітаємо на нашому сайті!',
         'button_login': 'Залогінитись',
         'button_register': 'Зареєструватись',
-        'button_logout': "Вийти"
+        'button_logout': "Вийти",
+        'product_list': "Продукти компанії",
     }
     return render(request, 'home.html', context)
 
 
 def login_user(request):
     if request.method == 'POST':
-        form = CustomUserLogin(request.POST)
+        form = CustomUserLogin(request, data=request.POST)
         if form.is_valid():
-            form.clean()
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
+            user = form.get_user()
             if user is not None:
                 login(request, user)
                 return redirect('home')
@@ -51,3 +52,36 @@ def register_user(request):
 def logout_user(request):
     auth_logout(request)
     return redirect('home')
+
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product_list.html'
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product_detail.html'
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_model = ProductForm
+    fields = ('name', 'info', 'price')
+    template_name = 'product_form.html'
+    success_url = reverse_lazy('product_list')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_model = ProductForm
+    fields = ('name', 'info', 'price')
+    template_name = 'product_form.html'
+    success_url = reverse_lazy('product_list')
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    form_model = ProductForm
+    template_name = 'product_confirm_delete.html'
+    success_url = reverse_lazy('product_list')

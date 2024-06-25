@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
-from .models import CustomUser
+from .models import CustomUser, Product
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -15,13 +15,20 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('age', 'gender', 'department')
 
 
-class CustomUserLogin(forms.Form):
-    username = forms.CharField(max_length=100)
-    password = forms.CharField(max_length=100)
-
-
-class CustomUserRegister(forms.ModelForm):
+class CustomUserLogin(AuthenticationForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'password', 'age', 'gender')
+        fields = ('username', 'password')
+
+
+class CustomUserRegister(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'password1', 'password2', 'age', 'gender')
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('name', 'info', 'price')
 

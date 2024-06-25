@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Видалення продукту{% endblock title %}
+
+{% block header %}<p></p>{% endblock header %}
+
+{% block main %}
+    <h1>Підтвердити видалення</h1>
+    <p>Ви впевнены що хочете видалити "{{ object.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Так, видалити</button>
+    </form>
+    <a href="{% url 'product_list' %}"><button>Назад</button></a>
+{% endblock main %}
+
+{% block footer %}<p></p>{% endblock footer %}

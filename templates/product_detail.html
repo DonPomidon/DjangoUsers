@@ -5,14 +5,13 @@
 {% block header %}<h1>Продукція компанії</h1>{% endblock header %}
 
 {% block main %}
-    <h1>{{ object.name }}</h1>
-    <p>{{ object.info }}</p>
-    <p>Ціна: {{ object.price }}</p>
-    <p>Дата створення: {{ object.creation_date }}</p>
-    <a href="{% url 'product_update' object.pk %}"><button>Редагувати</button></a>
-    <a href="{% url 'product_delete' object.pk %}"><button>Видалити</button></a>
+    <h1>{{ product.name }}</h1>
+    <p>{{ product.info }}</p>
+    <p>Ціна: {{ product.price }}</p>
+    <p>Дата створення: {{ product.creation_date }}</p>
+    <a href="{% url 'product_update' product.pk %}"><button>Редагувати</button></a>
+    <a href="{% url 'product_delete' product.pk %}"><button>Видалити</button></a>
     <a href="{% url 'product_list' %}"><button>Назад до списку</button></a>
-    <a href="{% url 'home' %}"><button>Вийти</button></a>
 {% endblock main %}
 
 {% block footer %}<p></p>{% endblock footer %}

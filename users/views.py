@@ -1,10 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserRegister, CustomUserLogin
 from django.contrib.auth import login, logout as auth_logout
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Product
 from .forms import ProductForm
-from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
 
@@ -12,10 +10,11 @@ from django.contrib.auth.decorators import login_required
 def user_check(request):
     user = request.user
     allowed_groups = ['IT', 'Marketing', 'Sales']
+    is_allowed_group = user.groups.filter(name__in=allowed_groups).exists()
 
     context = {
         'user': user,
-        'allowed_groups': allowed_groups,
+        'is_allowed_group': is_allowed_group,
     }
     return render(request, 'product_list.html', context)
 
@@ -67,35 +66,50 @@ def logout_user(request):
     return redirect('home')
 
 
-class ProductListView(ListView):
-    model = Product
-    template_name = 'product_list.html'
+@login_required
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, 'product_list.html', {'products': products})
 
 
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = 'product_detail.html'
+@login_required
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'product_detail.html', {'product': product})
 
 
-class ProductCreateView(CreateView):
-    model = Product
-    form_model = ProductForm
-    fields = ('name', 'info', 'price')
-    template_name = 'product_form.html'
-    success_url = reverse_lazy('product_list')
+@login_required
+def product_create(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = ProductForm()
+    return render(request, 'product_form.html', {'form': form})
 
 
-class ProductUpdateView(UpdateView):
-    model = Product
-    form_model = ProductForm
-    fields = ('name', 'info', 'price')
-    template_name = 'product_form.html'
-    success_url = reverse_lazy('product_list')
+@login_required
+def product_update(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'product_form.html', {'form': form})
 
 
-class ProductDeleteView(DeleteView):
-    model = Product
-    form_model = ProductForm
-    template_name = 'product_confirm_delete.html'
-    success_url = reverse_lazy('product_list')
+@login_required
+def product_delete(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('product_list')
+    return render(request, 'product_confirm_delete.html', {'product': product})
+
+
 

@@ -2,11 +2,10 @@
 
 {% block title %}Видалення продукту{% endblock title %}
 
-{% block header %}<p></p>{% endblock header %}
+{% block header %}<h1>Видалення продукту</h1>{% endblock header %}
 
 {% block main %}
-    <h1>Підтвердити видалення</h1>
-    <p>Ви впевнены що хочете видалити "{{ object.name }}"?</p>
+    <p>Ви впевнені, що хочете видалити "{{ product.name }}"?</p>
     <form method="post">
         {% csrf_token %}
         <button type="submit">Так, видалити</button>

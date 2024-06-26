@@ -12,11 +12,10 @@ from django.contrib.auth.decorators import login_required
 def user_check(request):
     user = request.user
     allowed_groups = ['IT', 'Marketing', 'Sales']
-    in_allowed_groups = user.groups.filter(name__in=allowed_groups).exists()
 
     context = {
         'user': user,
-        'in_allowed_groups': in_allowed_groups,
+        'allowed_groups': allowed_groups,
     }
     return render(request, 'product_list.html', context)
 

@@ -5,6 +5,20 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Product
 from .forms import ProductForm
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def user_check(request):
+    user = request.user
+    allowed_groups = ['IT', 'Marketing', 'Sales']
+    in_allowed_groups = user.groups.filter(name__in=allowed_groups).exists()
+
+    context = {
+        'user': user,
+        'in_allowed_groups': in_allowed_groups,
+    }
+    return render(request, 'product_list.html', context)
 
 
 def home(request):
@@ -85,3 +99,4 @@ class ProductDeleteView(DeleteView):
     form_model = ProductForm
     template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('product_list')
+

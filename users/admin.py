@@ -18,6 +18,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = [
         ('Login info: ', {"fields": ("username", "email")}),
         ('Additional info', {"fields": ("age", "gender", "department")}),
+        ('Permissions', {'fields': ('groups', 'user_permissions')}),
     ]
     add_fieldsets = [
         ('Login info: ', {"fields": ("username", "password1", "password2", "email")}),

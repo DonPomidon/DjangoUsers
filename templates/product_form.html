@@ -5,12 +5,14 @@
 {% block header %}<p></p>{% endblock header %}
 
 {% block main %}
+    {% if in_allowed_groups %}
     <h1>{{ view.object.pk|yesno:"Оновити продукт,Створити продукт" }}</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button>Зберегти</button>
     </form>
+    {% endif %}
 {% endblock main %}
 
 {% block footer %}<p></p>{% endblock footer %}

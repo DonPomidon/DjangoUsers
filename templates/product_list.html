@@ -5,6 +5,7 @@
 {% block header %}<h1>Продукція компанії</h1>{% endblock header %}
 
 {% block main %}
+    {% if in_allowed_groups %}
     <a href="{% url 'product_create' %}"><button>Створити продукт</button></a>
     <ul>
         {% for product in object_list %}
@@ -15,7 +16,10 @@
         </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'home' %}"><button>Вийти</button></a>
+    {% else %}
+        <p>У вас немає доступу!</p>
+    {% endif %}
+    <a href="{% url 'home' %}"><button>Назад</button></a>
 {% endblock main %}
 
 {% block footer %}<p></p>{% endblock footer %}

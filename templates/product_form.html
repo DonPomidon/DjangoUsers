@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Новий продукт{% endblock title %}
-
-{% block header %}<h1>{{ view.object.pk|yesno:"Оновити продукт,Створити продукт" }}</h1>{% endblock header %}
+{% block title %}New product{% endblock title %}
 
 {% block main %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button>Зберегти</button>
+        <button>Save</button>
     </form>
 {% endblock main %}
 

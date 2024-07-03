@@ -1,19 +1,28 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ title }}{% endblock title %}
+{% block title %}My site{% endblock title %}
 
 {% block header %}
-    <h1>{{ header }}</h1>
+    <h1>Company</h1>
 {% endblock header %}
+
+{% block nav %}
+{% endblock nav %}
 
 {% block main %}
     {% if user.is_authenticated %}
         <p>Welcome, {{ user.username }}!</p>
-        <a href="{% url 'product_list' %}"><button>{{ product_list }}</button></a>
-        <a href="{% url 'logout_user' %}"><button>{{ button_logout }}</button></a>
+        {% if request.user.groups.exists %}
+            <a href="{% url 'product_list' %}"><button>Products</button></a>
+            <a href="{% url 'product_create' %}"><button>Create product</button></a>
+            <a href="{% url 'logout_user' %}"><button>Logout</button></a>
+        {% else %}
+            <p>You don't have access!</p>
+            <a href="{% url 'logout_user' %}"><button>Logout</button></a>
+        {% endif %}
     {% else %}
-        <a href="{% url 'login_user' %}"><button>{{ button_login }}</button></a>
-        <a href="{% url 'register_user' %}"><button>{{ button_register }}</button></a>
+        <a href="{% url 'login_user' %}"><button>Login</button></a>
+        <a href="{% url 'register_user' %}"><button>Register</button></a>
     {% endif %}
 {% endblock main %}
 

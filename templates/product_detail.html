@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}Продукція{% endblock title %}
+{% block title %}Products{% endblock title %}
 
-{% block header %}<h1>Продукція компанії</h1>{% endblock header %}
+{% block header %}<h1>Company</h1>{% endblock header %}
 
 {% block main %}
     <h1>{{ product.name }}</h1>
     <p>{{ product.info }}</p>
-    <p>Ціна: {{ product.price }}</p>
-    <p>Дата створення: {{ product.creation_date }}</p>
-    <a href="{% url 'product_update' product.pk %}"><button>Редагувати</button></a>
-    <a href="{% url 'product_delete' product.pk %}"><button>Видалити</button></a>
-    <a href="{% url 'product_list' %}"><button>Назад до списку</button></a>
+    <p>Price: {{ product.price }}</p>
+    <p>Date create: {{ product.creation_date }}</p>
+    <a href="{% url 'product_update' product.pk %}"><button>Update</button></a>
+    <a href="{% url 'product_delete' product.pk %}"><button>Delete</button></a>
+    <a href="{% url 'product_list' %}"><button>Back to list</button></a>
 {% endblock main %}
 
 {% block footer %}<p></p>{% endblock footer %}

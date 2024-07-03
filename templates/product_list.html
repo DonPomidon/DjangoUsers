@@ -1,30 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}Продукція{% endblock title %}
-
-{% block header %}<h1>Продукція компанії</h1>{% endblock header %}
+{% block title %}Products{% endblock title %}
 
 {% block main %}
     {% if request.user.is_authenticated %}
         {% if request.user.groups.exists %}
-            <a href="{% url 'product_create' %}"><button>Створити продукт</button></a>
             <ul>
             {% for product in products %}
                 <li>
                     <a href="{% url 'product_detail' product.pk %}"><button>{{ product.name }}</button></a>
-                    <a href="{% url 'product_update' product.pk %}"><button>Оновити продукт</button></a>
-                    <a href="{% url 'product_delete' product.pk %}"><button>Видалити продукт</button></a>
                 </li>
             {% endfor %}
             </ul>
-            <a href="{% url 'home' %}"><button>Назад</button></a>
         {% else %}
-            <p>У вас немає доступу!</p>
-            <a href="{% url 'home' %}"><button>Назад</button></a>
+            <p>You don't have access!</p>
         {% endif %}
     {% else %}
-        <p>Ви не авторизовані!</p>
-        <a href="{% url 'home' %}"><button>Назад</button></a>
+        <p>You are not authorized!</p>
+        <a href="{% url 'home' %}"><button>Back</button></a>
     {% endif %}
 {% endblock main %}
 

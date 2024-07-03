@@ -20,15 +20,7 @@ def user_check(request):
 
 
 def home(request):
-    context = {
-        'title': 'Головна сторінка',
-        'header': 'Вітаємо на нашому сайті!',
-        'button_login': 'Залогінитись',
-        'button_register': 'Зареєструватись',
-        'button_logout': "Вийти",
-        'product_list': "Продукти компанії",
-    }
-    return render(request, 'home.html', context)
+    return render(request, 'home.html')
 
 
 def login_user(request):

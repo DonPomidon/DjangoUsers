@@ -10,21 +10,39 @@
         button {
             margin: 1%;
         }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        a {
+            flex: 1;
+            margin: 1%;
+        }
+        li {
+            list-style-type: none;
+        }
     </style>
 </head>
 <body>
     <header>
         {% block header %}
-            <h1>Мій сайт</h1>
+            <h1>Company</h1>
         {% endblock header %}
     </header>
+    <nav>
+        {% block nav %}
+            <a href="{% url 'product_list' %}"><button>Products</button></a>
+            <a href="{% url 'product_create' %}"><button>Create product</button></a>
+            <a href="{% url 'logout_user' %}"><button>Logout</button></a>
+        {% endblock nav %}
+    </nav>
     <main>
         {% block main %}
         {% endblock main %}
     </main>
     <footer>
         {% block footer %}
-            <p>Проходячи реєстрацію ви погоджуєтесь з правом передачі ваших персональних даних третім лицям.</p>
+            <p>Your personal data can be user by third persons.</p>
         {% endblock footer %}
     </footer>
 </body>

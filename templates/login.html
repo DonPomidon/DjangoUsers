@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}Авторизація{% endblock title %}
+{% block title %}Authorithation{% endblock title %}
 
 {% block header %}
     <h1>Login</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Підтвердити</button>
+        <a><button type="submit">Login</button></a>
     </form>
+        <a href="{% url 'home' %}"><button>Exit</button></a>
     {% if form.errors %}
         <ul>
             {% for field in form %}
@@ -19,5 +20,9 @@
         </ul>
     {% endif %}
 {% endblock header %}
+
+{% block nav %}
+<p></p>
+{% endblock nav %}
 
 {% block footer %}<p></p>{% endblock footer %}

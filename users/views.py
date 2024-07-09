@@ -3,10 +3,21 @@ from .forms import CustomUserRegister, CustomUserLogin
 from django.contrib.auth import login, logout as auth_logout
 from .models import Product
 from .forms import ProductForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+
+def in_departments(user, department):
+    return user.is_superuser or (user.is_authenticated and user.groups.filter(name__in=department).exists())
+
+
+def department_required(*department_names):
+    def in_department_decorator(user):
+        return in_departments(user, department_names)
+    return user_passes_test(in_department_decorator)
 
 
 @login_required
+@department_required('IT', 'Marketing', 'Sales')
 def user_check(request):
     user = request.user
     allowed_groups = ['IT', 'Marketing', 'Sales']
@@ -59,18 +70,21 @@ def logout_user(request):
 
 
 @login_required
+@department_required('IT', 'Marketing', 'Sales')
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'product_list.html', {'products': products})
 
 
 @login_required
+@department_required('IT', 'Marketing', 'Sales')
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'product_detail.html', {'product': product})
 
 
 @login_required
+@department_required('IT', 'Marketing', 'Sales')
 def product_create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -83,6 +97,7 @@ def product_create(request):
 
 
 @login_required
+@department_required('IT', 'Marketing', 'Sales')
 def product_update(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -96,6 +111,7 @@ def product_update(request, pk):
 
 
 @login_required
+@department_required('IT', 'Marketing', 'Sales')
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':

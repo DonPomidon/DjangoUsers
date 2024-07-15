@@ -3,28 +3,13 @@
 {% block title %}My site{% endblock title %}
 
 {% block header %}
-    <h1>Company</h1>
-{% endblock header %}
-
-{% block nav %}
-{% endblock nav %}
-
-{% block main %}
+    <a href="{% url 'home' %}"><h1>New World</h1></a>
     {% if user.is_authenticated %}
         <p>Welcome, {{ user.username }}!</p>
-        {% if request.user.groups.exists %}
-            <a href="{% url 'product_list' %}"><button>Products</button></a>
-            <a href="{% url 'product_create' %}"><button>Create product</button></a>
-            <a href="{% url 'logout_user' %}"><button>Logout</button></a>
-        {% else %}
-            <p>You don't have access!</p>
-            <a href="{% url 'logout_user' %}"><button>Logout</button></a>
-        {% endif %}
+        <a href="{% url 'logout_user' %}"><button>Logout</button></a>
     {% else %}
         <a href="{% url 'login_user' %}"><button>Login</button></a>
-        <a href="{% url 'register_user' %}"><button>Register</button></a>
     {% endif %}
-{% endblock main %}
+{% endblock header %}
 
-{% block footer %}<p></p>{% endblock footer %}
 

@@ -3,17 +3,8 @@ from .forms import CustomUserRegister, CustomUserLogin
 from django.contrib.auth import login, logout as auth_logout
 from .models import Product
 from .forms import ProductForm
-from django.contrib.auth.decorators import login_required, user_passes_test
-
-
-def in_departments(user, department):
-    return user.is_superuser or (user.is_authenticated and user.groups.filter(name__in=department).exists())
-
-
-def department_required(*department_names):
-    def in_department_decorator(user):
-        return in_departments(user, department_names)
-    return user_passes_test(in_department_decorator)
+from django.contrib.auth.decorators import login_required
+from .decorators import department_required
 
 
 @login_required
@@ -69,15 +60,11 @@ def logout_user(request):
     return redirect('home')
 
 
-@login_required
-@department_required('IT', 'Marketing', 'Sales')
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'product_list.html', {'products': products})
 
 
-@login_required
-@department_required('IT', 'Marketing', 'Sales')
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'product_detail.html', {'product': product})

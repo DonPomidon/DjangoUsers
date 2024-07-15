@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Title{% endblock title %}</title>
+    {% block style %}
     <style>
+        header {
+            background-color: black;
+            color: white;
+            padding: 2%;
+        }
+        header a {
+            text-decoration: none;
+            color: white;
+        }
         body {
             text-align: center;
         }
@@ -20,20 +30,51 @@
         }
         li {
             list-style-type: none;
+            display: flex;
+        }
+        footer {
+            background-color: black;
+            color: white;
+            padding: 2%;
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            width: 100%;
+        }
+        .products {
+            display: flex;
+            padding-top: 5%;
+        }
+        .product {
+            flex: 1;
+        }
+        .products_detail {
+            text-decoration: none;
+            padding: 0 50px;
+        }
+        .create_product {
+            display: flex;
+            padding-top: 8%;
+            text-decoration: none;
         }
     </style>
+    {% endblock style %}
 </head>
 <body>
     <header>
         {% block header %}
-            <h1>Company</h1>
+        <a href="{% url 'home' %}"><h1>New World</h1></a>
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}!</p>
+            <a href="{% url 'logout_user' %}"><button>Logout</button></a>
+        {% else %}
+            <a class="login" href="{% url 'login_user' %}"><button>Login</button></a>
+        {% endif %}
         {% endblock header %}
     </header>
     <nav>
         {% block nav %}
             <a href="{% url 'product_list' %}"><button>Products</button></a>
-            <a href="{% url 'product_create' %}"><button>Create product</button></a>
-            <a href="{% url 'logout_user' %}"><button>Logout</button></a>
         {% endblock nav %}
     </nav>
     <main>
@@ -42,7 +83,9 @@
     </main>
     <footer>
         {% block footer %}
-            <p>Your personal data can be user by third persons.</p>
+            <a>Contacts</a>
+            <a>Info</a>
+            <a>Support</a>
         {% endblock footer %}
     </footer>
 </body>

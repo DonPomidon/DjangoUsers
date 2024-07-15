@@ -2,14 +2,53 @@
 
 {% block title %}Authorithation{% endblock title %}
 
-{% block header %}
-    <h1>Login</h1>
+{% block style %}
+    <style>
+        header {
+            background-color: black;
+            color: white;
+            padding: 2%;
+        }
+        header a {
+            text-decoration: none;
+            color: white;
+        }
+        body {
+            text-align: center;
+        }
+        button {
+            margin: 1%;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        a {
+            flex: 1;
+            margin: 1%;
+        }
+        li {
+            list-style-type: none;
+        }
+        footer {
+            background-color: black;
+            color: white;
+            padding: 2%;
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            width: 100%;
+        }
+    </style>
+{% endblock style %}
+
+{% block main %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <a><button type="submit">Login</button></a>
     </form>
-        <a href="{% url 'home' %}"><button>Exit</button></a>
+        <a href="{% url 'register_user' %}"><button>Register</button></a>
     {% if form.errors %}
         <ul>
             {% for field in form %}
@@ -19,10 +58,5 @@
             {% endfor %}
         </ul>
     {% endif %}
-{% endblock header %}
+{% endblock main %}
 
-{% block nav %}
-<p></p>
-{% endblock nav %}
-
-{% block footer %}<p></p>{% endblock footer %}

@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}Products{% endblock title %}
+{% load custom_tags %}
 
-{% block header %}<h1>Company</h1>{% endblock header %}
+{% block title %}Products{% endblock title %}
 
 {% block main %}
     <h1>{{ product.name }}</h1>
     <p>{{ product.info }}</p>
     <p>Price: {{ product.price }}</p>
     <p>Date create: {{ product.creation_date }}</p>
+    {% if user|department_access:"IT,Sales,Marketing"   %}
     <a href="{% url 'product_update' product.pk %}"><button>Update</button></a>
     <a href="{% url 'product_delete' product.pk %}"><button>Delete</button></a>
-    <a href="{% url 'product_list' %}"><button>Back to list</button></a>
+    {% endif %}
+    <a href="{% url 'product_list' %}"><button>Back</button></a>
 {% endblock main %}
-
-{% block footer %}<p></p>{% endblock footer %}

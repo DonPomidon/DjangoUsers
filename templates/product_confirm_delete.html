@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
-{% block title %}Видалення продукту{% endblock title %}
+{% block title %}Product{% endblock title %}
 
-{% block header %}<h1>Видалення продукту</h1>{% endblock header %}
 
 {% block main %}
     <p>Ви впевнені, що хочете видалити "{{ product.name }}"?</p>
@@ -12,5 +11,3 @@
     </form>
     <a href="{% url 'product_list' %}"><button>Назад</button></a>
 {% endblock main %}
-
-{% block footer %}<p></p>{% endblock footer %}

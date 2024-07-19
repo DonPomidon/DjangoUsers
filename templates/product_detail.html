@@ -9,9 +9,11 @@
     <p>{{ product.info }}</p>
     <p>Price: {{ product.price }}</p>
     <p>Date create: {{ product.creation_date }}</p>
-    {% if user|department_access:"IT,Sales,Marketing"   %}
-    <a href="{% url 'product_update' product.pk %}"><button>Update</button></a>
-    <a href="{% url 'product_delete' product.pk %}"><button>Delete</button></a>
+    {% if perms.users.change_product or user|department_access:"IT,Sales,Marketing" %}
+        <a href="{% url 'product_update' product.pk %}"><button>Update</button></a>
+        {% if perms.users.delete_product or user|department_access:"IT,Sales,Marketing" %}
+            <a href="{% url 'product_delete' product.pk %}"><button>Delete</button></a>
+        {% endif %}
     {% endif %}
     <a href="{% url 'product_list' %}"><button>Back</button></a>
 {% endblock main %}

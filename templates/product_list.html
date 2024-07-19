@@ -13,7 +13,7 @@
         </li>
         {% endfor %}
     </ul>
-    {% if user|department_access:"IT,Sales,Marketing"  %}
-    <a class="create_product" href="{% url 'product_create' %}"><button>Create new product</button></a>
+    {% if perms.users.add_product or user|department_access:"IT,Sales,Marketing" %}
+        <a class="create_product" href="{% url 'product_create' %}"><button>Create new product</button></a>
     {% endif %}
 {% endblock main %}

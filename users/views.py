@@ -3,11 +3,11 @@ from .forms import CustomUserRegister, CustomUserLogin
 from django.contrib.auth import login, logout as auth_logout
 from .models import Product
 from .forms import ProductForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from .decorators import department_required
 
 
-@login_required
+@login_required(login_url="login_user")
 @department_required('IT', 'Marketing', 'Sales')
 def user_check(request):
     user = request.user
@@ -70,8 +70,9 @@ def product_detail(request, pk):
     return render(request, 'product_detail.html', {'product': product})
 
 
-@login_required
+@login_required(login_url="login_user")
 @department_required('IT', 'Marketing', 'Sales')
+@permission_required('users.add_product', raise_exception=True)
 def product_create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -83,8 +84,9 @@ def product_create(request):
     return render(request, 'product_form.html', {'form': form})
 
 
-@login_required
+@login_required(login_url="login_user")
 @department_required('IT', 'Marketing', 'Sales')
+@permission_required('users.change_product', raise_exception=True)
 def product_update(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -97,8 +99,9 @@ def product_update(request, pk):
     return render(request, 'product_form.html', {'form': form})
 
 
-@login_required
+@login_required(login_url="login_user")
 @department_required('IT', 'Marketing', 'Sales')
+@permission_required('users.delete_product', raise_exception=True)
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':

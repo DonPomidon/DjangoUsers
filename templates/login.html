@@ -2,46 +2,6 @@
 
 {% block title %}Authorithation{% endblock title %}
 
-{% block style %}
-    <style>
-        header {
-            background-color: black;
-            color: white;
-            padding: 2%;
-        }
-        header a {
-            text-decoration: none;
-            color: white;
-        }
-        body {
-            text-align: center;
-        }
-        button {
-            margin: 1%;
-        }
-        nav {
-            display: flex;
-            align-items: center;
-        }
-        a {
-            flex: 1;
-            margin: 1%;
-        }
-        li {
-            list-style-type: none;
-        }
-        footer {
-            background-color: black;
-            color: white;
-            padding: 2%;
-            position: absolute;
-            bottom: 0;
-            display: flex;
-            width: 100%;
-        }
-    </style>
-{% endblock style %}
-
 {% block main %}
     <form method="post">
         {% csrf_token %}
